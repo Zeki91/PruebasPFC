@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Prueba PFC</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="js/mapa.js"></script>
+    </head>
+    <body onload="initCB()">
+        <div class="wrapper">
+                <div class="sidebar">
+                        <input id="b_Ir" type="button" value="Jaén" onClick="irAJaen()"/>
+                        <input id="b_CargarLineas" type="button" value="Cargar líneas" onClick="cargarLineas()"/>
+                </div>
+                <div id="map3d" class="main"></div>
+        </div>
+            
+    </body>
+</html>
