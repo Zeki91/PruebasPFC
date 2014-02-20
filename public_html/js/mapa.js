@@ -1,56 +1,58 @@
 
 
-/** Este fichero contiene todas las funciones necesarias para manejar 
- *  el complemento de Google Earth correctamente */
+/***********************************************************************
+ * Este fichero contiene toda la funcionalidad asociada a Google Earth *
+ * *********************************************************************/
 
-    var ge;
-    google.load("earth", "1.x");
+var ge;
+var lineas = new Array();
+google.load("earth", "1.x");
 
-    function init() {
-      google.earth.createInstance('map3d', initCB, failureCB);
-    }
+function init() {
+    google.earth.createInstance('map3d', initCB, failureCB);
+}
 
-    function initCB(instance) {
-      ge = instance;
-      ge.getWindow().setVisibility(true);
-    }
+function initCB(instance) {
+    ge = instance;
+    ge.getWindow().setVisibility(true);
+}
 
-    function failureCB(errorCode) {
-    }
+function failureCB(errorCode) {
+}
 
-    google.setOnLoadCallback(init);
-    
-    
-    // Desplaza la cámara hasta Jaén
-    function irAJaen() {
+google.setOnLoadCallback(init);
 
-        var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
-        //alert("Latitud: " + lookAt.getLatitude() + 
-        //		 "\nLongitud: " + lookAt.getLongitude());
 
-        lookAt.setLongitude(-3.795573);
-        lookAt.setLatitude(37.774807);
-        lookAt.setRange(4000); // Altura de la camara
-        lookAt.setHeading(0); // Camara orientada al norte
+// Desplaza la cámara hasta Jaén
+function irAJaen() {
 
-        ge.getView().setAbstractView(lookAt);
+    var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+    //alert("Latitud: " + lookAt.getLatitude() + 
+    //		 "\nLongitud: " + lookAt.getLongitude());
 
-    }
-    
-    // Función para cargar las rutas de los autobuses
-    function cargarLineas() {
-        
-        alert("EN CONTRUCCIÓN");
-        
-        var link = ge.createLink('');
-        var href = 'C:\Users\Ezequiel\Documents\PFC\Lineas\Linea2PolgonoLosOlivares-Centro.kml';
-        link.setHref(href);
+    lookAt.setLongitude(-3.795573);
+    lookAt.setLatitude(37.774807);
+    lookAt.setRange(4000); // Altura de la camara
+    lookAt.setHeading(0); // Camara orientada al norte
 
-        var networkLink = ge.createNetworkLink('');
-        networkLink.set(link, true, true); // Sets the link, refreshVisibility, and flyToView
+    ge.getView().setAbstractView(lookAt);
 
-        ge.getFeatures().appendChild(networkLink);
-        
-    }
-    
-    
+}
+
+// Función para cargar las rutas de los autobuses
+function cargarLineas() {
+
+    alert("EN CONTRUCCIÓN...");
+
+    var href = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Linea2PolgonoLosOlivares-Centro.kml';
+
+    google.earth.fetchKml(ge, href, function(linea) {
+        if (linea)
+            ge.getFeatures().appendChild(linea);
+        if (linea.getAbstractView()) //Definir el elemento <Camera> en el KML de todas las rutas
+            ge.getView().setAbstractView(linea.getAbstractView());
+    });
+
+}
+
+
