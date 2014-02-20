@@ -141,13 +141,6 @@
     min-width: 550px;
 }
 
-
-/**
- * Flotamos la barra lateral a la izquierda y
- * damos al contenido principal un margen igual
- * al ancho de la barra.
- */
-
 .sidebar {
     width: 248px;
     float: left;
