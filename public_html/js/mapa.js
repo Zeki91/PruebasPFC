@@ -23,12 +23,12 @@ function failureCB(errorCode) {
 google.setOnLoadCallback(init);
 
 
-// Desplaza la cámara hasta Jaén
+/**
+ * Función que mueve la cámara hasta Jaén.
+ */
 function irAJaen() {
 
     var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
-    //alert("Latitud: " + lookAt.getLatitude() + 
-    //		 "\nLongitud: " + lookAt.getLongitude());
 
     lookAt.setLongitude(-3.795573);
     lookAt.setLatitude(37.774807);
@@ -39,7 +39,9 @@ function irAJaen() {
 
 }
 
-// Función para cargar las rutas de los autobuses
+/** 
+ * Carga las rutas de los autobuses urbanos.
+ */
 function cargarLineas() {
 
     alert("EN CONTRUCCIÓN...");
