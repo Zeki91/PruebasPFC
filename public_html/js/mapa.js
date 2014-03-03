@@ -5,10 +5,7 @@
  * *********************************************************************/
 
 var ge;
-
-//var l_1, l_2, l_4, l_5, l_6, l_7, l_8, l_9;
-//var l_10, l_11, l_12, l_13, l_14, l_15, l_16, l_17;
-//var l_18, l_19;
+var rutaMostrada = -1; //Índice que la ruta que se está mostrando actualmente
 
 var lineas = new Array(); //Contiene las rutas
 
@@ -42,6 +39,15 @@ function init() {
 function initCB(instance) {
     ge = instance;
     ge.getWindow().setVisibility(true);
+    
+    var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+
+    lookAt.setLongitude(-3.795573);
+    lookAt.setLatitude(37.774807);
+    lookAt.setRange(5000); // Altura de la camara
+    lookAt.setHeading(0); // Camara orientada al norte
+
+    ge.getView().setAbstractView(lookAt);
 }
 
 function failureCB(errorCode) {
@@ -85,5 +91,28 @@ function cargarLineas() {
     }
     
     alert("Todas las lineas cargadas");
+    
+}
+
+
+/**
+ * Muestra la ruta seleccionada
+ * @param index Índice de la ruta seleccionada en el combobox
+ */
+
+function mostrarRuta(index){
+    
+    if (rutaMostrada !== -1) {
+        
+        ge.getFeatures().removeChild(lineas[rutaMostrada]);
+        rutaMostrada = index;
+        ge.getFeatures().appendChild(lineas[rutaMostrada]);
+        
+    } else {
+        
+        rutaMostrada = index;
+        ge.getFeatures().appendChild(lineas[rutaMostrada]);
+        
+    }
     
 }
