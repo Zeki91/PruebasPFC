@@ -102,17 +102,29 @@ function cargarLineas() {
 
 function mostrarRuta(index){
     
-    if (rutaMostrada !== -1) {
+    if (index === 3) {
+        
+        alert("Esta línea no está añadida al modelo");
+        
+    } else if (index === 0) {     
         
         ge.getFeatures().removeChild(lineas[rutaMostrada]);
-        rutaMostrada = index;
-        ge.getFeatures().appendChild(lineas[rutaMostrada]);
+        rutaMostrada = -1;
         
     } else {
-        
-        rutaMostrada = index;
-        ge.getFeatures().appendChild(lineas[rutaMostrada]);
-        
-    }
     
+        if (rutaMostrada !== -1) {
+
+            ge.getFeatures().removeChild(lineas[rutaMostrada]);
+            rutaMostrada = index;
+            ge.getFeatures().appendChild(lineas[rutaMostrada]);
+
+        } else {
+
+            rutaMostrada = index;
+            ge.getFeatures().appendChild(lineas[rutaMostrada]);
+
+        }
+    
+    }
 }
