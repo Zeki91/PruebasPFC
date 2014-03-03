@@ -104,7 +104,7 @@ function mostrarRuta(index){
     
     if (index === 3) {
         
-        alert("Esta línea no está añadida al modelo");
+        alert("Esta línea no está añadida al modelo.");
         
     } else if (index === 0) {     
         
