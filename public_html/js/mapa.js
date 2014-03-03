@@ -71,21 +71,19 @@ function irAJaen() {
  */
 function cargarLineas() {
 
-    var ruta = ge.createLink('');
-
     for (var i = 1; i <= 19; i++) {
-
-        if(i !== 3){
+        
+        if (i !== 3) {
+            
+            var ruta = ge.createLink('');
             ruta.setHref(url_lineas[i]);
-
             lineas[i] = ge.createNetworkLink('');
-            lineas[i].setLink(ruta);
-      }
+            lineas[i].setLink(ruta);  
+            
+        }  
       
     }
+    
     alert("Todas las lineas cargadas");
-    
-    ge.getFeatures().appendChild(lineas[1]);
-    
     
 }
