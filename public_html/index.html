@@ -12,8 +12,9 @@
         <div class="wrapper">
                 <div class="sidebar">
                         <input id="b_Ir" type="button" value="Jaén" onClick="irAJaen()"/>
-                        <input id="b_CargarLineas" type="button" value="Cargar líneas" onClick="cargarLineas()"/>
-                        <form>
+                       <!-- <input id="b_CargarLineas" type="button" value="Cargar líneas" onClick="cargarLineas()"/>-->
+                       <input id="geolocalizador" type="button" value="¿Dónde estoy?" onClick="geoLoc()"/>
+                       <form>
                             <select name="selector" onChange="mostrarRuta(selector.selectedIndex)">
                                 <option selected> Líneas </option>
                                 <option>Línea 1</option>
@@ -36,10 +37,12 @@
                                 <option>Línea 18</option>
                                 <option>Línea 19</option>
                             </select>
-                        </form>
-                        <input id="geolocalizador" type="button" value="¿Dónde estoy?" onClick=""/>
+                       </form>
+                       <div id="geoLat"><p>Latitud: </p></div>
+                       <div id="geoLong"><p>Longitud: </p></div>
+                       <div id="geoAcc"><p>Precisión: </p></div>
                 </div>
-                <div id="map3d" class="main"></div>
+                <div id="mapa" class="main"></div>
         </div>
             
     </body>

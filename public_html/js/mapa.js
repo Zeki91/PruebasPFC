@@ -33,16 +33,16 @@ url_lineas[19] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea19-Bule
 google.load("earth", "1.x");
 
 function init() {
-    google.earth.createInstance('map3d', initCB, failureCB);
+    google.earth.createInstance('mapa', initCB, failureCB);
 }
 
 function initCB(instance) {
     ge = instance;
-    
+
     ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
-    
+
     ge.getWindow().setVisibility(true);
-    
+
     var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
 
     lookAt.setLongitude(-3.795573);
@@ -51,7 +51,7 @@ function initCB(instance) {
     lookAt.setHeading(0); // Camara orientada al norte
 
     ge.getView().setAbstractView(lookAt);
-    
+
     cargarLineas();
 }
 
@@ -83,41 +83,41 @@ function irAJaen() {
 function cargarLineas() {
 
     for (var i = 1; i <= 19; i++) {
-        
+
         if (i !== 3) {
-            
+
             var ruta = ge.createLink('');
             ruta.setHref(url_lineas[i]);
             lineas[i] = ge.createNetworkLink('');
-            lineas[i].setLink(ruta);  
-            
-        }  
-      
+            lineas[i].setLink(ruta);
+
+        }
+
     }
-    
+
     alert("Todas las lineas cargadas");
-    
+
 }
 
 
 /**
- * Muestra la ruta seleccionada
+ * Muestra la ruta seleccionada.
  * @param index Índice de la ruta seleccionada en el combobox
  */
 
-function mostrarRuta(index){
-    
+function mostrarRuta(index) {
+
     if (index === 3) {
-        
+
         alert("Esta línea no está añadida al modelo.");
-        
-    } else if (index === 0) {     
-        
+
+    } else if (index === 0) {
+
         ge.getFeatures().removeChild(lineas[rutaMostrada]);
         rutaMostrada = -1;
-        
+
     } else {
-    
+
         if (rutaMostrada !== -1) {
 
             ge.getFeatures().removeChild(lineas[rutaMostrada]);
@@ -130,13 +130,63 @@ function mostrarRuta(index){
             ge.getFeatures().appendChild(lineas[rutaMostrada]);
 
         }
-    
+
     }
 }
 
-
+/**
+ * Geolocalización del usuario.
+ * @returns {undefined}
+ */
 function geoLoc() {
+
+    var latitud = document.getElementById("geoLat");
+    var longitud = document.getElementById("geoLong");
+    var precision = document.getElementById("geoAcc");
     
-    alert("En construcción.");
-    
+    navigator.geolocation.getCurrentPosition(function(objPosition)
+    {
+        var long = objPosition.coords.longitude;
+        var lat = objPosition.coords.latitude;
+        var acc = objPosition.coords.accuracy;
+        var loc = ge.createPlacemark('Aquí estoy');
+        var punto = ge.createPoint('');
+        var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+        
+        punto.setLatitude(lat);
+        punto.setLongitude(long);
+        loc.setGeometry(punto);
+        lookAt.setLatitude(lat);
+        lookAt.setLongitude(long);
+        lookAt.setRange(500);
+        
+        ge.getView().setAbstractView(lookAt);
+        
+        ge.getFeatures().appendChild(loc);
+        
+        latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
+        longitud.innerHTML = "<p>Longitud: " + long + "</p>";
+        precision.innerHTML = "<p>Precisión: " + acc + "</p>";
+        
+    }, function(objPositionError)
+    {
+        switch (objPositionError.code)
+        {
+            case objPositionError.PERMISSION_DENIED:
+                alert("No se ha permitido el acceso a la posición del usuario.");
+                break;
+            case objPositionError.POSITION_UNAVAILABLE:
+                alert("No se ha podido acceder a la información de su posición.");
+                break;
+            case objPositionError.TIMEOUT:
+                alert("El servicio ha tardado demasiado tiempo en responder.");
+                break;
+            default:
+                alert("Error desconocido.");
+        }
+    }, {
+        maximumAge: 75000,
+        timeout: 15000
+    });
 }
+
