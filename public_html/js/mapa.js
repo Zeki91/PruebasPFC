@@ -38,6 +38,9 @@ function init() {
 
 function initCB(instance) {
     ge = instance;
+    
+    ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
+    
     ge.getWindow().setVisibility(true);
     
     var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
@@ -48,6 +51,8 @@ function initCB(instance) {
     lookAt.setHeading(0); // Camara orientada al norte
 
     ge.getView().setAbstractView(lookAt);
+    
+    cargarLineas();
 }
 
 function failureCB(errorCode) {
@@ -127,4 +132,11 @@ function mostrarRuta(index){
         }
     
     }
+}
+
+
+function geoLoc() {
+    
+    alert("En construcción.");
+    
 }
