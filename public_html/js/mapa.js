@@ -132,6 +132,9 @@ function mostrarRuta(index) {
         }
 
     }
+
+    irAJaen();
+
 }
 
 /**
@@ -140,53 +143,66 @@ function mostrarRuta(index) {
  */
 function geoLoc() {
 
-    var latitud = document.getElementById("geoLat");
-    var longitud = document.getElementById("geoLong");
-    var precision = document.getElementById("geoAcc");
-    
-    navigator.geolocation.getCurrentPosition(function(objPosition)
-    {
-        var long = objPosition.coords.longitude;
-        var lat = objPosition.coords.latitude;
-        var acc = objPosition.coords.accuracy;
-        var loc = ge.createPlacemark('Aquí estoy');
-        var punto = ge.createPoint('');
-        var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
-        
-        punto.setLatitude(lat);
-        punto.setLongitude(long);
-        loc.setGeometry(punto);
-        lookAt.setLatitude(lat);
-        lookAt.setLongitude(long);
-        lookAt.setRange(500);
-        
-        ge.getView().setAbstractView(lookAt);
-        
-        ge.getFeatures().appendChild(loc);
-        
-        latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
-        longitud.innerHTML = "<p>Longitud: " + long + "</p>";
-        precision.innerHTML = "<p>Precisión: " + acc + "</p>";
-        
-    }, function(objPositionError)
-    {
-        switch (objPositionError.code)
+    if (navigator.geolocation) {
+
+        var latitud = document.getElementById("geoLat");
+        var longitud = document.getElementById("geoLong");
+        var precision = document.getElementById("geoAcc");
+
+        navigator.geolocation.getCurrentPosition(function(objPosition)
         {
-            case objPositionError.PERMISSION_DENIED:
-                alert("No se ha permitido el acceso a la posición del usuario.");
-                break;
-            case objPositionError.POSITION_UNAVAILABLE:
-                alert("No se ha podido acceder a la información de su posición.");
-                break;
-            case objPositionError.TIMEOUT:
-                alert("El servicio ha tardado demasiado tiempo en responder.");
-                break;
-            default:
-                alert("Error desconocido.");
-        }
-    }, {
-        maximumAge: 75000,
-        timeout: 15000
-    });
+            var long = objPosition.coords.longitude;
+            var lat = objPosition.coords.latitude;
+            var acc = objPosition.coords.accuracy;
+            var loc = ge.createPlacemark('');
+            var punto = ge.createPoint('');
+            var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+            var icon = ge.createIcon('');
+            icon.setHref('http://maps.gstatic.com/intl/es_es/mapfiles/ms/micons/blue-dot.png');
+            var style = ge.createStyle('');
+            style.getIconStyle().setIcon(icon);
+            loc.setStyleSelector(style);
+
+            punto.setLatitude(lat);
+            punto.setLongitude(long);
+            loc.setGeometry(punto);
+            lookAt.setLatitude(lat);
+            lookAt.setLongitude(long);
+            lookAt.setRange(500);
+
+            ge.getView().setAbstractView(lookAt);
+
+            ge.getFeatures().appendChild(loc);
+
+            latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
+            longitud.innerHTML = "<p>Longitud: " + long + "</p>";
+            precision.innerHTML = "<p>Precisión: " + acc + "</p>";
+
+        }, function(objPositionError)
+        {
+            switch (objPositionError.code)
+            {
+                case objPositionError.PERMISSION_DENIED:
+                    alert("No se ha permitido el acceso a la posición del usuario.");
+                    break;
+                case objPositionError.POSITION_UNAVAILABLE:
+                    alert("No se ha podido acceder a la información de su posición.");
+                    break;
+                case objPositionError.TIMEOUT:
+                    alert("El servicio ha tardado demasiado tiempo en responder.");
+                    break;
+                default:
+                    alert("Error desconocido.");
+            }
+        }, {
+            maximumAge: 75000,
+            timeout: 15000
+        });
+
+    } else {
+
+        alert("Tu navegador no tiene geolocalización.");
+
+    }
 }
 
