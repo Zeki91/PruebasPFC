@@ -70,7 +70,7 @@ function irAJaen() {
 
     lookAt.setLongitude(-3.795573);
     lookAt.setLatitude(37.774807);
-    lookAt.setRange(5000); // Altura de la camara
+    lookAt.setRange(5500); // Altura de la camara
     lookAt.setHeading(0); // Camara orientada al norte
 
     ge.getView().setAbstractView(lookAt);
@@ -158,7 +158,7 @@ function geoLoc() {
             var punto = ge.createPoint('');
             var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
             var icon = ge.createIcon('');
-            icon.setHref('http://maps.gstatic.com/intl/es_es/mapfiles/ms/micons/blue-dot.png');
+            icon.setHref('http://maps.gstatic.com/intl/es_es/mapfiles/ms/micons/red-dot.png');
             var style = ge.createStyle('');
             style.getIconStyle().setIcon(icon);
             loc.setStyleSelector(style);
