@@ -12,6 +12,7 @@ var lineas = new Array(); //Contiene las rutas
 var url_lineas = new Array(); //Contiene las URL de todas las rutas 
 url_lineas[1] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea01Peamefcit-Centro.kml';
 url_lineas[2] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Linea2PolgonoLosOlivares-Centro.kml';
+url_lineas[3] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea3CerroMolina-PalacioCongresos-Centro.kml';
 url_lineas[4] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Linea4Alcantarilla-Glorieta-Centro-Universidad-CentroComercial.kml';
 url_lineas[5] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea5TiroNacional-Glorieta-Centro.kml';
 url_lineas[6] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Linea6Cementerio-Centro.kml';
@@ -84,14 +85,10 @@ function cargarLineas() {
 
     for (var i = 1; i <= 19; i++) {
 
-        if (i !== 3) {
-
             var ruta = ge.createLink('');
             ruta.setHref(url_lineas[i]);
             lineas[i] = ge.createNetworkLink('');
             lineas[i].setLink(ruta);
-
-        }
 
     }
 
@@ -107,11 +104,8 @@ function cargarLineas() {
 
 function mostrarRuta(index) {
 
-    if (index === 3) {
 
-        alert("Esta línea no está añadida al modelo.");
-
-    } else if (index === 0) {
+    if (index === 0) {
 
         ge.getFeatures().removeChild(lineas[rutaMostrada]);
         rutaMostrada = -1;
@@ -201,8 +195,9 @@ function geoLoc() {
 
     } else {
 
-        alert("Tu navegador no tiene geolocalización.");
+        alert("Tu navegador no soporta la función de geolocalización.");
 
     }
+
 }
 
