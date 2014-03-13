@@ -85,10 +85,10 @@ function cargarLineas() {
 
     for (var i = 1; i <= 19; i++) {
 
-            var ruta = ge.createLink('');
-            ruta.setHref(url_lineas[i]);
-            lineas[i] = ge.createNetworkLink('');
-            lineas[i].setLink(ruta);
+        var ruta = ge.createLink('');
+        ruta.setHref(url_lineas[i]);
+        lineas[i] = ge.createNetworkLink('');
+        lineas[i].setLink(ruta);
 
     }
 
@@ -132,7 +132,34 @@ function mostrarRuta(index) {
 }
 
 /**
+ * Dibuja una circunferencia con centro (x,y) y con radio rad.
+ * @param {float} rad Radio de la circunferencia
+ * @param {float} x Latitud del centro de la circunferencia
+ * @param {float} y Longitud del centro de la circunferencia
+ * @returns {makeCircle.ring}
+ */
+function makeCircle(rad, x, y) {
+    
+    var center = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+    var ring = ge.createLinearRing('');
+    var steps = 25;
+    var pi2 = Math.PI * 2;
+    
+    for (var i = 0; i < steps; i++) {
+        
+        var lat = center.getLatitude() + x + radius * Math.cos(i / steps * pi2);
+        var lng = center.getLongitude() + y + radius * Math.sin(i / steps * pi2);
+        ring.getCoordinates().pushLatLngAlt(lat, lng, 0);
+        
+    }
+    
+    return ring;
+    
+}
+
+/**
  * Geolocalización del usuario.
+ * @returns {undefined}
  */
 function geoLoc() {
 
