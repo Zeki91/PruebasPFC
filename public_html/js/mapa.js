@@ -64,6 +64,7 @@ google.setOnLoadCallback(init);
 
 /**
  * Función que mueve la cámara hasta Jaén.
+ * @returns {void}
  */
 function irAJaen() {
 
@@ -80,6 +81,7 @@ function irAJaen() {
 
 /** 
  * Carga las rutas de los autobuses urbanos.
+ * @returns {void}
  */
 function cargarLineas() {
 
@@ -100,6 +102,7 @@ function cargarLineas() {
 /**
  * Muestra la ruta seleccionada.
  * @param index Índice de la ruta seleccionada en el combobox
+ * @returns {void}
  */
 
 function mostrarRuta(index) {
@@ -147,8 +150,8 @@ function makeCircle(rad, x, y) {
     
     for (var i = 0; i < steps; i++) {
         
-        var lat = center.getLatitude() + x + radius * Math.cos(i / steps * pi2);
-        var lng = center.getLongitude() + y + radius * Math.sin(i / steps * pi2);
+        var lat = center.getLatitude() + x + rad * Math.cos(i / steps * pi2);
+        var lng = center.getLongitude() + y + rad * Math.sin(i / steps * pi2);
         ring.getCoordinates().pushLatLngAlt(lat, lng, 0);
         
     }
@@ -159,7 +162,7 @@ function makeCircle(rad, x, y) {
 
 /**
  * Geolocalización del usuario.
- * @returns {undefined}
+ * @returns {void}
  */
 function geoLoc() {
 
