@@ -133,7 +133,6 @@ function mostrarRuta(index) {
 
 /**
  * Geolocalización del usuario.
- * @returns {undefined}
  */
 function geoLoc() {
 
