@@ -137,26 +137,24 @@ function mostrarRuta(index) {
 /**
  * Dibuja una circunferencia con centro (x,y) y con radio rad.
  * @param {float} rad Radio de la circunferencia
- * @param {float} x Latitud del centro de la circunferencia
- * @param {float} y Longitud del centro de la circunferencia
+ * @param {float} centro Centro de la circunferencia
  * @returns {makeCircle.ring}
  */
-function makeCircle(rad, x, y) {
-    
-    var center = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
-    var ring = ge.createLinearRing('');
+function dibujarPrecision(rad, centro) {
+   
+    var anillo = ge.createLinearRing('');
     var steps = 25;
     var pi2 = Math.PI * 2;
     
     for (var i = 0; i < steps; i++) {
         
-        var lat = center.getLatitude() + x + rad * Math.cos(i / steps * pi2);
-        var lng = center.getLongitude() + y + rad * Math.sin(i / steps * pi2);
-        ring.getCoordinates().pushLatLngAlt(lat, lng, 0);
+        var lat = centro.getLatitude() + rad * Math.cos(i / steps * pi2);
+        var lng = centro.getLongitude() + rad * Math.sin(i / steps * pi2);
+        anillo.getCoordinates().pushLatLngAlt(lat, lng, 0);
         
     }
     
-    return ring;
+    return anillo;
     
 }
 
@@ -181,7 +179,7 @@ function geoLoc() {
             var punto = ge.createPoint('');
             var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
             var icon = ge.createIcon('');
-            icon.setHref('http://maps.gstatic.com/intl/es_es/mapfiles/ms/micons/red-dot.png');
+            icon.setHref('https://dl.dropboxusercontent.com/u/20056281/Iconos/male-2.png');
             var style = ge.createStyle('');
             style.getIconStyle().setIcon(icon);
             loc.setStyleSelector(style);
@@ -196,6 +194,9 @@ function geoLoc() {
             ge.getView().setAbstractView(lookAt);
 
             ge.getFeatures().appendChild(loc);
+//            var c = ge.createPlacemark('');
+//            c.setGeometry(dibujarPrecision(0.0005, punto));
+//            ge.getFeatures().appendChild(c);
 
             latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
             longitud.innerHTML = "<p>Longitud: " + long + "</p>";
