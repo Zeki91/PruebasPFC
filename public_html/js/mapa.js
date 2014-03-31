@@ -30,6 +30,28 @@ url_lineas[17] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea17-Azah
 url_lineas[18] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea18-Azahar-Fuentezuelas-Centro.kml';
 url_lineas[19] = 'https://dl.dropboxusercontent.com/u/20056281/Rutas/Lnea19-Bulevar-PaseodelaEstacin-Renfe-Centro.kml';
 
+var paradas = new Array(); //Contiene las paradas de cada ruta
+paradas[1] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea1.KML';
+paradas[2] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea2.KML';
+paradas[4] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea4.KML';
+paradas[5] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea5.KML';
+paradas[6] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea6.KML';
+paradas[7] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+paradas[8] = '';
+paradas[9] = '';
+paradas[10] = '';
+paradas[11] = '';
+paradas[12] = '';
+paradas[13] = '';
+paradas[14] = '';
+paradas[15] = '';
+paradas[16] = '';
+paradas[17] = '';
+paradas[18] = '';
+paradas[19] = '';
+
+
+
 
 google.load("earth", "1.x");
 
