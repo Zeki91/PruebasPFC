@@ -112,9 +112,16 @@ function cargarLineas() {
     for (var i = 1; i <= 19; i++) {
 
         var ruta = ge.createLink('');
+        var parada = ge.createLink('');
+        
         ruta.setHref(url_lineas[i]);
+        parada.setHref(url_paradas[i]);
+        
         lineas[i] = ge.createNetworkLink('');
+        paradas[i] = ge.createNetworkLink('');
+        
         lineas[i].setLink(ruta);
+        paradas[i].setLink(parada);
 
     }
 
@@ -135,6 +142,7 @@ function mostrarRuta(index) {
     if (index === 0) {
 
         ge.getFeatures().removeChild(lineas[rutaMostrada]);
+        ge.getFeatures().removeChild(lineas[rutaMostrada]);
         rutaMostrada = -1;
 
     } else {
@@ -142,13 +150,16 @@ function mostrarRuta(index) {
         if (rutaMostrada !== -1) {
 
             ge.getFeatures().removeChild(lineas[rutaMostrada]);
+            ge.getFeatures().removeChild(paradas[rutaMostrada]);
             rutaMostrada = index;
             ge.getFeatures().appendChild(lineas[rutaMostrada]);
+            ge.getFeatures().appendChild(paradas[rutaMostrada]);
 
         } else {
 
             rutaMostrada = index;
             ge.getFeatures().appendChild(lineas[rutaMostrada]);
+            ge.getFeatures().appendChild(paradas[rutaMostrada]);
 
         }
 
