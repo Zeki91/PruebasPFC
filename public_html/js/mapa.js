@@ -35,22 +35,23 @@ var paradas = new Array(); // Contiene las paradas de cada ruta
 var url_paradas = new Array(); //Contiene las URL de las paradas de cada ruta
 url_paradas[1] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea1.KML';
 url_paradas[2] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea2.KML';
+url_paradas[3] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
 url_paradas[4] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea4.KML';
 url_paradas[5] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea5.KML';
 url_paradas[6] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea6.KML';
 url_paradas[7] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
-url_paradas[8] = '';
-url_paradas[9] = '';
-url_paradas[10] = '';
-url_paradas[11] = '';
-url_paradas[12] = '';
-url_paradas[13] = '';
-url_paradas[14] = '';
-url_paradas[15] = '';
-url_paradas[16] = '';
-url_paradas[17] = '';
-url_paradas[18] = '';
-url_paradas[19] = '';
+url_paradas[8] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[9] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[10] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[11] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[12] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[13] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[14] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[15] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[16] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[17] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[18] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[19] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
 
 
 
@@ -117,6 +118,7 @@ function cargarLineas() {
         ruta.setHref(url_lineas[i]);
         parada.setHref(url_paradas[i]);
         
+        
         lineas[i] = ge.createNetworkLink('');
         paradas[i] = ge.createNetworkLink('');
         
@@ -132,7 +134,7 @@ function cargarLineas() {
 
 /**
  * Muestra la ruta seleccionada.
- * @param index Índice de la ruta seleccionada en el combobox
+ * @param {int} index Índice de la ruta seleccionada en el combobox
  * @returns {void}
  */
 
