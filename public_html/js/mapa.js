@@ -6,6 +6,7 @@
 
 var ge;
 var rutaMostrada = -1; //Índice que la ruta que se está mostrando actualmente
+var usuario_localizado = 0; //1 si el usuario a buscado su posición; 0 en cualquier otro caso
 
 var lineas = new Array(); //Contiene las rutas
 
@@ -40,7 +41,7 @@ url_paradas[4] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_l
 url_paradas[5] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea5.KML';
 url_paradas[6] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea6.KML';
 url_paradas[7] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
-url_paradas[8] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
+url_paradas[8] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea8.KML';
 url_paradas[9] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
 url_paradas[10] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
 url_paradas[11] = 'https://dl.dropboxusercontent.com/u/20056281/Paradas/paradas_linea7.KML';
@@ -228,9 +229,8 @@ function geoLoc() {
             lookAt.setLongitude(long);
             lookAt.setRange(500);
 
-            ge.getView().setAbstractView(lookAt);
-
             ge.getFeatures().appendChild(loc);
+            ge.getView().setAbstractView(lookAt);
 //            var c = ge.createPlacemark('');
 //            c.setGeometry(dibujarPrecision(0.0005, punto));
 //            ge.getFeatures().appendChild(c);
@@ -238,6 +238,8 @@ function geoLoc() {
             latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
             longitud.innerHTML = "<p>Longitud: " + long + "</p>";
             precision.innerHTML = "<p>Precisión: " + acc + "</p>";
+            
+            usuario_localizado = 1;
 
         }, function(objPositionError)
         {
