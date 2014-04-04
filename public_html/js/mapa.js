@@ -7,7 +7,7 @@
 var ge;
 var rutaMostrada = -1; //Índice que la ruta que se está mostrando actualmente
 var usuario_localizado = 0; //1 si el usuario a buscado su posición; 0 en cualquier otro caso
-
+var loc_usuario; // Placemark que almacenará la localización del usuario
 var lineas = new Array(); //Contiene las rutas
 
 var url_lineas = new Array(); //Contiene las URL de todas las rutas 
@@ -115,14 +115,14 @@ function cargarLineas() {
 
         var ruta = ge.createLink('');
         var parada = ge.createLink('');
-        
+
         ruta.setHref(url_lineas[i]);
         parada.setHref(url_paradas[i]);
-        
-        
+
+
         lineas[i] = ge.createNetworkLink('');
         paradas[i] = ge.createNetworkLink('');
-        
+
         lineas[i].setLink(ruta);
         paradas[i].setLink(parada);
 
@@ -177,21 +177,21 @@ function mostrarRuta(index) {
  * @returns {makeCircle.ring}
  */
 function dibujarPrecision(rad, centro) {
-   
+
     var anillo = ge.createLinearRing('');
     var steps = 25;
     var pi2 = Math.PI * 2;
-    
+
     for (var i = 0; i < steps; i++) {
-        
+
         var lat = centro.getLatitude() + rad * Math.cos(i / steps * pi2);
         var lng = centro.getLongitude() + rad * Math.sin(i / steps * pi2);
         anillo.getCoordinates().pushLatLngAlt(lat, lng, 0);
-        
+
     }
-    
+
     return anillo;
-    
+
 }
 
 /**
@@ -200,69 +200,81 @@ function dibujarPrecision(rad, centro) {
  */
 function geoLoc() {
 
-    if (navigator.geolocation) {
+    if (usuario_localizado === 1) {
+        
+        var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+        lookAt.setLatitude(loc_usuario.getGeometry().getLatitude());
+        lookAt.setLongitude(loc_usuario.getGeometry().getLongitude());
+        lookAt.setRange(500);
+        ge.getView().setAbstractView(lookAt);
+        
+    } else {
 
-        var latitud = document.getElementById("geoLat");
-        var longitud = document.getElementById("geoLong");
-        var precision = document.getElementById("geoAcc");
+        if (navigator.geolocation) {
 
-        navigator.geolocation.getCurrentPosition(function(objPosition)
-        {
-            var long = objPosition.coords.longitude;
-            var lat = objPosition.coords.latitude;
-            var acc = objPosition.coords.accuracy;
-            var loc = ge.createPlacemark('');
-            var punto = ge.createPoint('');
-            var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
-            var icon = ge.createIcon('');
-            icon.setHref('https://dl.dropboxusercontent.com/u/20056281/Iconos/male-2.png');
-            var style = ge.createStyle('');
-            style.getIconStyle().setIcon(icon);
-            loc.setStyleSelector(style);
+            var latitud = document.getElementById("geoLat");
+            var longitud = document.getElementById("geoLong");
+            var precision = document.getElementById("geoAcc");
 
-            punto.setLatitude(lat);
-            punto.setLongitude(long);
-            loc.setGeometry(punto);
-            lookAt.setLatitude(lat);
-            lookAt.setLongitude(long);
-            lookAt.setRange(500);
+            navigator.geolocation.getCurrentPosition(function(objPosition)
+            {
+                var long = objPosition.coords.longitude;
+                var lat = objPosition.coords.latitude;
+                var acc = objPosition.coords.accuracy;
+                loc_usuario = ge.createPlacemark('');
+                var lookAt = ge.getView().copyAsLookAt(ge.ALTITUDE_RELATIVE_TO_GROUND);
+                var icon = ge.createIcon('');
+                icon.setHref('https://dl.dropboxusercontent.com/u/20056281/Iconos/male-2.png');
+                var style = ge.createStyle('');
+                style.getIconStyle().setIcon(icon);
+                loc_usuario.setStyleSelector(style);
 
-            ge.getFeatures().appendChild(loc);
-            ge.getView().setAbstractView(lookAt);
+                punto = ge.createPoint('');
+                punto.setLatitude(lat);
+                punto.setLongitude(long);
+                loc_usuario.setGeometry(punto);
+                lookAt.setLatitude(lat);
+                lookAt.setLongitude(long);
+                lookAt.setRange(500);
+
+                ge.getFeatures().appendChild(loc_usuario);
+                ge.getView().setAbstractView(lookAt);
 //            var c = ge.createPlacemark('');
 //            c.setGeometry(dibujarPrecision(0.0005, punto));
 //            ge.getFeatures().appendChild(c);
 
-            latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
-            longitud.innerHTML = "<p>Longitud: " + long + "</p>";
-            precision.innerHTML = "<p>Precisión: " + acc + "</p>";
-            
-            usuario_localizado = 1;
+                latitud.innerHTML = "<p>Latitud: " + lat + "</p>";
+                longitud.innerHTML = "<p>Longitud: " + long + "</p>";
+                precision.innerHTML = "<p>Precisión: " + acc + "</p>";
 
-        }, function(objPositionError)
-        {
-            switch (objPositionError.code)
+                usuario_localizado = 1;
+
+            }, function(objPositionError)
             {
-                case objPositionError.PERMISSION_DENIED:
-                    alert("No se ha permitido el acceso a la posición del usuario.");
-                    break;
-                case objPositionError.POSITION_UNAVAILABLE:
-                    alert("No se ha podido acceder a la información de su posición.");
-                    break;
-                case objPositionError.TIMEOUT:
-                    alert("El servicio ha tardado demasiado tiempo en responder.");
-                    break;
-                default:
-                    alert("Error desconocido.");
-            }
-        }, {
-            maximumAge: 75000,
-            timeout: 15000
-        });
+                switch (objPositionError.code)
+                {
+                    case objPositionError.PERMISSION_DENIED:
+                        alert("No se ha permitido el acceso a la posición del usuario.");
+                        break;
+                    case objPositionError.POSITION_UNAVAILABLE:
+                        alert("No se ha podido acceder a la información de su posición.");
+                        break;
+                    case objPositionError.TIMEOUT:
+                        alert("El servicio ha tardado demasiado tiempo en responder.");
+                        break;
+                    default:
+                        alert("Error desconocido.");
+                }
+            }, {
+                maximumAge: 75000,
+                timeout: 15000
+            });
 
-    } else {
+        } else {
 
-        alert("Tu navegador no soporta la función de geolocalización.");
+            alert("Tu navegador no soporta la función de geolocalización.");
+
+        }
 
     }
 
