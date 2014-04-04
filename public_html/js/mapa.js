@@ -128,8 +128,6 @@ function cargarLineas() {
 
     }
 
-    alert("Todas las lineas cargadas");
-
 }
 
 
